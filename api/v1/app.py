@@ -17,7 +17,13 @@ def close(self):
     """calls storage.close()"""
     storage.close()
 
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone Restful API',
+    'uiversion': 3
+}
+
 if __name__ == "__main__":
+    """ runs the flask app """
     host = environ.get("HBNB_API_HOST")
     port = environ.get("HBNB_API_PORT")
 
