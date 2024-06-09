@@ -76,7 +76,7 @@ def delete_review(review_id):
         methods=["POST"],
         strict_slashes=False)
 def create_review(place_id):
-    """create a place"""
+    """create a place review"""
     place = storage.get(Place, place_id)
     user_id = request.get_json(force=True).get("user_id")
     user = storage.get(User, user_id)
@@ -108,7 +108,7 @@ def create_review(place_id):
         methods=["PUT"],
         strict_slashes=False)
 def update_review(review_id):
-    """update a place"""
+    """update a place review"""
     review = storage.get(Review, review_id)
 
     if not request.get_json(force=True):
@@ -122,7 +122,7 @@ def update_review(review_id):
 
     for key, value in data.items():
         if key not in ignore:
-            setattr(place, key, value)
+            setattr(review, key, value)
 
     review.save()
     storage.save()
