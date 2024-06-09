@@ -2,7 +2,6 @@
 """"""
 from api.v1.views import app_views
 from flask import jsonify
-from models.engine.file_storage import classes
 from models import storage
 from models.user import User
 from models.state import State
@@ -11,13 +10,14 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-classes2 = {
+classes = {
             "Amenity": Amenity,
             "Place": Place,
             "State": State,
             "User": User,
             "City": City,
-            "Review": Review}
+            "Review": Review
+            }
 
 @app_views.route('/status', methods=["GET"], strict_slashes=False)
 def status():
