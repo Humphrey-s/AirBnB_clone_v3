@@ -121,3 +121,12 @@ class TestFileStorage(unittest.TestCase):
         new_user.save()
         self.assertIs(new_user, models.storage.get("User", new_user.id))
         self.assertIs(None, models.storage.get("State", "not_me"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test storage.count function"""
+        number = storage.count()
+        new_user = User(first_name="Humphrey")
+        new_user.save()
+
+        self.assertEqual(storage.count(), number + 1)
