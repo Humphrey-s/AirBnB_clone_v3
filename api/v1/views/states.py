@@ -60,15 +60,15 @@ def create_state():
     """creates a state instance"""
     dct = request.get_json()
     if dct is None:
-        abort(404)
+        abort(400)
 
     if "name" not in dct.keys():
-        abort(404, "Missing name")
+        abort(400, "Missing name")
 
     instance = State(**dct)
     instance.save()
-    storage.save()
-    return make_response(jsonify(instance.to_dict()), 200)
+
+    return make_response(jsonify(instance.to_dict()), 201)
 
 
 @app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
@@ -80,10 +80,10 @@ def update_state(state_id):
     instance = storage.get(State, state_id)
 
     if instance is None:
-        abort(404)
+        abort(400)
 
     if dct is None:
-        abort(404, description="Not a JSON")
+        abort(400, description="Not a JSON")
 
     for key, value in dct.items():
         if key not in ignore:
