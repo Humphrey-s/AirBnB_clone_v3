@@ -59,12 +59,14 @@ def delete_state(state_id):
 def create_state():
     """creates a state instance"""
     dct = request.get_json()
-    if dct is None:
+
+    if not request.get_json():
         abort(400, description="Not a JSON")
 
-    if "name" not in dct.keys():
+    if "name" not in request.get_json():
         abort(400, description="Missing name")
 
+    dct = request.get_json()
     instance = State(**dct)
     instance.save()
 
@@ -75,20 +77,20 @@ def create_state():
 def update_state(state_id):
     """Updates a state"""
     states = storage.all(State)
-    dct = request.get_json()
     ignore = ["id", "created_at", "updated_at"]
     instance = storage.get(State, state_id)
+
+    if not request.get_json():
+        abort(400, description="Not a JSON")
 
     if instance is None:
         abort(404)
 
-    if dct is None:
-        abort(400, description="Not a JSON")
-
+    dct = request.get_json()
     for key, value in dct.items():
         if key not in ignore:
             setattr(instance, key, value)
     else:
         instance.save()
         storage.save()
-        return jsonify(instance.to_dict()), 200
+        return make_response(jsonify(instance.to_dict()), 200)
