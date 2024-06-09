@@ -60,10 +60,10 @@ def create_state():
     """creates a state instance"""
     dct = request.get_json()
     if dct is None:
-        abort(400)
+        abort(400, description="Not a JSON")
 
     if "name" not in dct.keys():
-        abort(400, "Missing name")
+        abort(400, description="Missing name")
 
     instance = State(**dct)
     instance.save()
