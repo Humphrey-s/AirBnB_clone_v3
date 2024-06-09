@@ -96,7 +96,7 @@ def update_user(user_id):
     if user is None:
         abort(404)
 
-    ignore = ["id", "created_at", "updated_at"]
+    ignore = ["id", "created_at", "updated_at", "email"]
     data = request.get_json()
 
     for key, value in data.items():
