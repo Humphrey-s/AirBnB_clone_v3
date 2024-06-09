@@ -27,7 +27,18 @@ if __name__ == "__main__":
     r_j = r.json()
     city_id = r_j[0].get('id')
 
-    """ DELETE /api/v1/cities/<city_id>
+    """ PUT /api/v1/cities/<city_id>
     """
-    r = requests.delete("http://0.0.0.0:5000/api/v1/cities/{}".format(city_id))
+    r = requests.put("http://0.0.0.0:5000/api/v1/cities/{}".format(city_id), data=json.dumps({ 'name': "NewName" }), headers={ 'Content-Type': "application/json" })
     print(r.status_code)
+    r_j = r.json()
+    print(r_j.get('id') is None)
+    print(r_j.get('name') == "NewName")
+    
+    """ Fetch cities
+    """
+    r = requests.get("http://0.0.0.0:5000/api/v1/states/{}/cities".format(state_id))
+    r_j = r.json()
+    for city_j in r_j:
+        if city_j.get('id') == city_id:
+            print(city_j.get('name') == "NewName")
