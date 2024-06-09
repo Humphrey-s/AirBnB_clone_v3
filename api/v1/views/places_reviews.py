@@ -93,8 +93,8 @@ def create_review(place_id):
     if user is None:
         abort(404)
 
-    if "name" not in request.get_json(force=True):
-        abort(400, description="Missing name")
+    if "text" not in request.get_json(force=True):
+        abort(400, description="Missing text")
 
     dct = request.get_json()
     dct["place_id"] = place.id
