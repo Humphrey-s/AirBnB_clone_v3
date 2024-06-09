@@ -67,7 +67,7 @@ def delete_amenity(amenity_id):
         '/amenities',
         methods=["POST"],
         strict_slashes=False)
-def create_amenity(state_id):
+def create_amenity():
     """create a amenity"""
 
     if not request.get_json(force=True):
