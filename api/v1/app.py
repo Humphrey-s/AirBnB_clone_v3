@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """api app"""
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -17,10 +17,18 @@ def close(self):
     """calls storage.close()"""
     storage.close()
 
+
 app.config['SWAGGER'] = {
     'title': 'AirBnB clone Restful API',
     'uiversion': 3
 }
+
+
+@app.errorhandler(404)
+def not_found(e):
+    """returns a 404 error"""
+    return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     """ runs the flask app """
