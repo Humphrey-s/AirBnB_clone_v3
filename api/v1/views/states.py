@@ -80,7 +80,7 @@ def update_state(state_id):
     instance = storage.get(State, state_id)
 
     if instance is None:
-        abort(400)
+        abort(404)
 
     if dct is None:
         abort(400, description="Not a JSON")
