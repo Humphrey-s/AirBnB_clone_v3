@@ -56,7 +56,7 @@ def get_city(city_id):
 
 
 @app_views.route(
-        '/api/v1/cities/<city_id>',
+        '/cities/<city_id>',
         methods=["DELETE"],
         strict_slashes=False)
 def delete_city(city_id):
