@@ -11,6 +11,13 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+classes2 = {
+            "Amenity": Amenity,
+            "Place": Place,
+            "State": State,
+            "User": User,
+            "City": City,
+            "Review": Review}
 
 @app_views.route('/status', methods=["GET"], strict_slashes=False)
 def status():
@@ -22,7 +29,7 @@ def status():
 def stats():
     """retrieves the number of each objects by type"""
 
-    classes = {
+    classes2 = {
             "Amenity": "amenities",
             "Place": "places",
             "State": "states",
@@ -31,8 +38,8 @@ def stats():
             "Review": "reviews"}
 
     new_dict = {}
-    for cls in classes:
+    for cls in classes.keys():
         if cls != "BaseModel":
-            new_dict[classes[cls]] = storage.count(cls)
+            new_dict[classes2[cls]] = storage.count(cls)
 
     return jsonify(new_dict)
