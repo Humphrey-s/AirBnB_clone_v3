@@ -116,6 +116,6 @@ def update_city(city_id):
         if key not in ignore:
             setattr(city, key, value)
 
-    instance.save()
+    city.save()
     storage.save()
     return make_response(jsonify(city.to_dict()), 200)
