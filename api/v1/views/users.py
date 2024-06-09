@@ -76,6 +76,12 @@ def create_user():
     if "name" not in request.get_json(force=True):
         abort(400, description="Missing name")
 
+    if "email" not in request.get_json(force=True):
+        abort(400, description="Missing email")
+
+    if "password" not in request.get_json(force=True):
+        abort(400, description="Missing password")
+
     dct = request.get_json()
     instance = User(**dct)
     instance.save()
