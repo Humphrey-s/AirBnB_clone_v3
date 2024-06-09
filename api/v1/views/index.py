@@ -38,8 +38,7 @@ def stats():
             "Review": "reviews"}
 
     new_dict = {}
-    for cls in classes.keys():
-        if cls != "BaseModel":
-            new_dict[classes2[cls]] = storage.count(cls)
+    for key, cls  in classes.items():
+        new_dict[classes2[key]] = storage.count(cls)
 
     return jsonify(new_dict)
