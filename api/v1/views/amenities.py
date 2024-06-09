@@ -29,7 +29,7 @@ def get_amenities():
     """get amenities"""
     amenities = storage.all(Amenity)
 
-    lst = [m.to_dict() for city in amenities.values()]
+    lst = [m.to_dict() for m in amenities.values()]
     return make_response(jsonify(lst), 200)
 
 
