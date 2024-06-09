@@ -117,7 +117,7 @@ def update_place(place_id):
     if place is None:
         abort(404)
 
-    ignore = ["id", "created_at", "updated_at", "city_id"]
+    ignore = ["id", "user_id", "created_at", "updated_at", "city_id"]
     data = request.get_json()
 
     for key, value in data.items():
