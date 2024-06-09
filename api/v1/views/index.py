@@ -19,6 +19,7 @@ classes = {
             "Review": Review
             }
 
+
 @app_views.route('/status', methods=["GET"], strict_slashes=False)
 def status():
     """returns a JSON"""
@@ -38,7 +39,7 @@ def stats():
             "Review": "reviews"}
 
     new_dict = {}
-    for key, cls  in classes.items():
+    for key, cls in classes.items():
         new_dict[classes2[key]] = storage.count(cls)
 
     return jsonify(new_dict)
