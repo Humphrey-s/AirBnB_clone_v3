@@ -29,8 +29,9 @@ def get_users():
     """get users"""
     users = storage.all(User)
 
-    lst = [m.to_dict() for m in users.values()]
-    return make_response(jsonify(lst), 200)
+    lst = [user.to_dict() for user in users.values()]
+
+    return jsonify(lst), 200
 
 
 @app_views.route(

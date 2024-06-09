@@ -21,24 +21,29 @@ if __name__ == "__main__":
     if state_id is None:
         print("State with cities not found")
     
-    """ Fetch cities
+    """ get city
     """
     r = requests.get("http://0.0.0.0:5000/api/v1/states/{}/cities".format(state_id))
     r_j = r.json()
-    city_id = r_j[0].get('id')
-
-    """ PUT /api/v1/cities/<city_id>
-    """
-    r = requests.put("http://0.0.0.0:5000/api/v1/cities/{}".format(city_id), data=json.dumps({ 'name': "NewName" }), headers={ 'Content-Type': "application/json" })
-    print(r.status_code)
-    r_j = r.json()
-    print(r_j.get('id') is None)
-    print(r_j.get('name') == "NewName")
-    
-    """ Fetch cities
-    """
-    r = requests.get("http://0.0.0.0:5000/api/v1/states/{}/cities".format(state_id))
-    r_j = r.json()
+    city_id = None
     for city_j in r_j:
-        if city_j.get('id') == city_id:
-            print(city_j.get('name') == "NewName")
+        rc = requests.get("http://0.0.0.0:5000/api/v1/cities/{}/places".format(city_j.get('id')))
+        rc_j = rc.json()
+        if len(rc_j) != 0:
+            city_id = city_j.get('id')
+            break
+    
+    if city_id is None:
+        print("City without cities not found")
+
+    """ Get user
+    """
+    r = requests.get("http://0.0.0.0:5000/api/v1/users")
+    r_j = r.json()
+    user_id = r_j[0].get('id')
+
+    
+    """ POST /api/v1/cities/<city_id>/places
+    """
+    r = requests.post("http://0.0.0.0:5000/api/v1/cities/{}/places/".format(city_id), data={ 'user_id': user_id, 'name': "NewPlace", 'number_rooms': 4, 'number_bathrooms': 3, 'max_guest': 6, 'price_by_night': 100, 'latitude': 1.3, 'longitude': 2.3 }, headers={ 'Content-Type': "application/x-www-form-urlencoded" })
+    print(r.status_code)
