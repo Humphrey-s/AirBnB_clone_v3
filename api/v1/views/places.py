@@ -177,7 +177,7 @@ def place_search():
             for p in pre_places:
                 if storage_t == "db":
                     if amenity in p.amenities:
-                        if amenity not in results:
+                        if p not in results:
                             results.append(p)
                     else:
                         if p in results:
