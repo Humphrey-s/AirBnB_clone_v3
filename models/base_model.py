@@ -73,7 +73,7 @@ class BaseModel:
 
         storage_t = getenv("HBNB_TYPE_STORAGE")
         if "password" in new_dict and storage_t == "db": 
-            new_dict.pop("password")
+            del new_dict["password"]
 
         return new_dict
 
