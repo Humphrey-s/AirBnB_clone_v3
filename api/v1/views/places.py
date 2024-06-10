@@ -169,7 +169,6 @@ def place_search():
             if place.city_id == city.id:
                 pre_places.append(place)
 
-
     results = pre_places[:]
 
     if "amenities" in data.keys():
@@ -191,6 +190,5 @@ def place_search():
                         if p in results:
                             results.remove(p)
 
-
-
+    results = [r.to_dict() for r in results]
     return jsonify(results), 201
