@@ -148,6 +148,7 @@ def place_search():
     results = []
     cities = storage.all(City).values()
     places = storage.all(Place).values()
+    amenities = storage.all(Amenity).values()
     s_cities = []
 
     if "states" in data.keys():
@@ -162,9 +163,34 @@ def place_search():
             if city not in s_cities:
                 s_cities.append(city)
 
+    pre_places = []
     for city in s_cities:
         for place in places:
             if place.city_id == city.id:
-                results.append(place.to_dict())
+                pre_places.append(place)
+
+
+    results = pre_places[:]
+
+    if "amenities" in data.keys():
+        for amenity_id in data["amenities"]:
+            amenity = storage.get(Amenity, amenity_id)
+            for p in pre_places:
+                if storage_t == "db":
+                    if amenity in p.amenities:
+                        if amenity not in results:
+                            results.append(p)
+                    else:
+                        if p in results:
+                            results.remove(p)
+                else:
+                    if amenity.id in p.amenity_ids:
+                        if amenity not in results:
+                            results.append(p)
+                    else:
+                        if p in results:
+                            results.remove(p)
+
+
 
     return jsonify(results), 201
