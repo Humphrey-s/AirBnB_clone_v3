@@ -141,7 +141,7 @@ def place_search():
 
     data = request.get_json(force=True)
 
-    if len(data) == 0:
+    if not data or not len(data):
         lst = [p.to_dict() for p in storage.all(Place).values()]
         return jsonify(lst), 200
 
