@@ -143,7 +143,7 @@ def place_search():
 
     if len(data) == 0:
         lst = [p.to_dict() for p in storage.all(Place).values()]
-        return lst
+        return jsonify(lst), 200
 
     results = []
     cities = storage.all(City).values()
