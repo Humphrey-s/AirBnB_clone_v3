@@ -30,13 +30,19 @@ storage_t = environ.get('HBNB_TYPE_STORAGE')
 def get_place_amenities(place_id):
     """get amenities of a place"""
     place = storage.get(Place, place_id)
+    amenities = storage.all(Amenity)
 
     if place is None:
         abort(404)
 
     place_amenity = []
-    for amenity in place.amenities():
+    if storage_t == "db":
+        for amenity in place.amenities():
             place_amenity.append(amenity.to_dict())
+    else:
+        for amenity in amenities.values():
+            if amenity.id in place.amenity_ids:
+                place_amenity.append(amenity)
 
     return make_response(jsonify(place_amenity), 200)
 
